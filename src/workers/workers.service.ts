@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { CreateWorkerDto } from './dto/create-worker.dto';
@@ -21,12 +22,22 @@ export class WorkersService {
     return this.workerModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} worker`;
+  findOne(name: string) {
+    return this.workerModel.findOne({ name });
   }
 
-  update(id: number, updateWorkerDto: UpdateWorkerDto) {
-    return `This action updates a #${id} worker`;
+  async update(_id: string, newWorker: UpdateWorkerDto) {
+    try {const worker = await this.findOne(_id)
+      if (worker!=null){
+        const updateWorker = Object.assign(worker,newWorker)
+        return this.workerModel.findOneAndUpdate({_id}, updateWorker, {new:true})
+      }
+      else{
+        throw new Error()
+      }
+    } catch (error) {
+      console.log(error)
+    };
   }
 
   remove(name: string) {

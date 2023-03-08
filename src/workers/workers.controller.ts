@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -26,14 +27,15 @@ export class WorkersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.workersService.findOne(+id);
+  findOne(@Param('name') name: string) {
+    return this.workersService.findOne(name);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateWorkerDto: UpdateWorkerDto) {
-    return this.workersService.update(+id, updateWorkerDto);
-  }
+  update(
+    @Param('id') _id: string,
+    @Body() updateWorkerDto: UpdateWorkerDto)
+    {return this.workersService.update(_id, updateWorkerDto)}
 
   @Delete(':name')
   remove(@Param('name') name: string) {
