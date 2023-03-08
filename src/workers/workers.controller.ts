@@ -14,7 +14,7 @@ import { UpdateWorkerDto } from './dto/update-worker.dto';
 
 @Controller('workers')
 export class WorkersController {
-  constructor(private readonly workersService: WorkersService) {}
+  constructor(private readonly workersService: WorkersService) { }
 
   @Post()
   create(@Body() createWorkerDto: CreateWorkerDto) {
@@ -31,11 +31,10 @@ export class WorkersController {
     return this.workersService.findOne(name);
   }
 
-  @Patch(':id')
+  @Patch(':name')
   update(
-    @Param('id') _id: string,
-    @Body() updateWorkerDto: UpdateWorkerDto)
-    {return this.workersService.update(_id, updateWorkerDto)}
+    @Param('name') name: string,
+    @Body() updateWorkerDto: UpdateWorkerDto) { return this.workersService.update(name, updateWorkerDto) }
 
   @Delete(':name')
   remove(@Param('name') name: string) {

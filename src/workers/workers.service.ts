@@ -26,13 +26,15 @@ export class WorkersService {
     return this.workerModel.findOne({ name });
   }
 
-  async update(_id: string, newWorker: UpdateWorkerDto) {
-    try {const worker = await this.findOne(_id)
-      if (worker!=null){
-        const updateWorker = Object.assign(worker,newWorker)
-        return this.workerModel.findOneAndUpdate({_id}, updateWorker, {new:true})
+  async update(name: string, newWorker: UpdateWorkerDto) {
+    try {
+      const worker = await this.workerModel.findOne({ name })
+      console.log(worker)
+      if (worker != null) {
+        const updateWorker = Object.assign(worker, newWorker)
+        return this.workerModel.findOneAndUpdate({ name }, updateWorker, { new: true })
       }
-      else{
+      else {
         throw new Error()
       }
     } catch (error) {
@@ -41,6 +43,7 @@ export class WorkersService {
   }
 
   remove(name: string) {
+    console.log({ name })
     return this.workerModel.remove({ name });
   }
 }
