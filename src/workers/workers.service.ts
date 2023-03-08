@@ -29,7 +29,7 @@ export class WorkersService {
     return `This action updates a #${id} worker`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} worker`;
+  remove(name: string) {
+    return this.workerModel.remove({ name });
   }
 }

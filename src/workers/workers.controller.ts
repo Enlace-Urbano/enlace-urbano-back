@@ -1,11 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete
+} from '@nestjs/common';
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 
 @Controller('workers')
 export class WorkersController {
-  constructor(private readonly workersService: WorkersService) { }
+  constructor(private readonly workersService: WorkersService) {}
 
   @Post()
   create(@Body() createWorkerDto: CreateWorkerDto) {
@@ -27,8 +35,8 @@ export class WorkersController {
     return this.workersService.update(+id, updateWorkerDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.workersService.remove(+id);
+  @Delete(':name')
+  remove(@Param('name') name: string) {
+    return this.workersService.remove(name);
   }
 }
