@@ -4,9 +4,6 @@ export type WorkerDocument = Worker & Document
 @Schema()
 export class Worker {
     @Prop()
-    _id: string;
-
-    @Prop()
     name: string;
 
     @Prop()

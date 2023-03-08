@@ -14,7 +14,7 @@ export class WorkersService {
   ) { }
 
   create(createWorkerDto: CreateWorkerDto) {
-    return 'This action adds a new worker';
+    return this.workerModel.create(createWorkerDto);
   }
 
   findAll(): Promise<Worker[]> {
