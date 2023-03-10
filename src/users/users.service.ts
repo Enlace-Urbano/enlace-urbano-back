@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { error } from 'console';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -22,15 +21,15 @@ export class UsersService {
     return this.userModel.find().exec();
   }
 
-   async findUser(username: string): Promise<User> {
-     return this.userModel.findOne({ username });
-   }
+  async findUser(username: string): Promise<User> {
+    return this.userModel.findOne({ username });
+  }
 
   async update(username: string, newUser: UpdateUserDto) {
     try {
-      const user = await this.userModel.findOne({username})
+      const user = await this.userModel.findOne({ username })
       if (user != null) {
-       const updateuser = Object.assign(user, newUser);
+        const updateuser = Object.assign(user, newUser);
         return this.userModel.findOneAndUpdate({ username }, newUser, { new: true });
       }
       else {

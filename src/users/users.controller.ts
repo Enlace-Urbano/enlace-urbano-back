@@ -21,18 +21,18 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-   @Get(':username')
-   findUser(@Param('username') username: string) {
+  @Get(':username')
+  findUser(@Param('username') username: string) {
     return this.usersService.findUser(username);
-   }
+  }
 
- @Patch(':username')
- update(
-  @Param('username') username:string,
-  @Body() UpdateUserDto:UpdateUserDto){
+  @Patch(':username')
+  update(
+    @Param('username') username: string,
+    @Body() UpdateUserDto: UpdateUserDto) {
     return this.usersService.update(username, UpdateUserDto)
   }
- 
+
 
   @Delete(':id')
   remove(@Param('id') id: string) {
