@@ -6,6 +6,7 @@ import { WorkersModule } from './workers/workers.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthService } from './auth/auth.service';
 import { LoginController } from './auth/login.controller';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,9 +14,10 @@ import { LoginController } from './auth/login.controller';
       'mongodb+srv://enlace-urbano:factoriaf5@enlace-urbano.etjivkc.mongodb.net/enlace-urbano'
     ),
     UsersModule,
-    WorkersModule
+    WorkersModule,
+    AuthModule
   ],
-  controllers: [AppController, LoginController],
-  providers: [AppService, AuthService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule { }
