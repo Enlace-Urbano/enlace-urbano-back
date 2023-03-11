@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoggedUser } from 'src/users/interfaces/user.intetrface';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt'
-import { sign } from 'crypto';
+import { User } from 'src/users/schemas/user.schema';
 
 @Injectable()
 export class AuthService {
@@ -13,10 +13,8 @@ export class AuthService {
         try {
             const user = await this.usersService.findUser(username)
             if (user && user.password === password) {
-
                 const { password, ...result } = user
-                console.log(result)
-                return result
+                return result;
 
             } return null
 
@@ -25,10 +23,19 @@ export class AuthService {
         }
     }
 
-    async login(user: LoggedUser) {
-        const payload = { username: user.username, id: user._id }
-        return {
-            access_token: this.jwtService.sign(payload)
+    async login(user: User) {
+
+        try {
+            const validatedUser = await this.validateUser(user.username, user.password)
+            const payload = { username: validatedUser.username, id: validatedUser._id }
+            console.log(payload)
+            return {
+                access_token: this.jwtService.sign(payload)
+            }
+
+        } catch (error) {
+            throw new UnauthorizedException()
         }
+
     }
 }
