@@ -13,8 +13,8 @@ export class AuthService {
         try {
             const user = await this.usersService.findUser(username)
             if (user && user.password === password) {
-                const { password, ...result } = user
-                return result;
+                const { password, ...userLogged } = user
+                return userLogged
 
             } return null
 
@@ -24,13 +24,14 @@ export class AuthService {
     }
 
     async login(user: User) {
-
         try {
             const validatedUser = await this.validateUser(user.username, user.password)
             const payload = { username: validatedUser.username, id: validatedUser._id }
             console.log(payload)
+            const token = this.jwtService.sign(payload)
+            // console.log(token)
             return {
-                access_token: this.jwtService.sign(payload)
+                access_token: payload
             }
 
         } catch (error) {

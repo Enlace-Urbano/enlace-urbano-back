@@ -22,7 +22,7 @@ export class UsersService {
   }
 
   async findUser(username: string): Promise<User> {
-    return this.userModel.findOne({ username });
+    return this.userModel.findOne({ username }).lean()
   }
 
   async update(username: string, newUser: UpdateUserDto) {
