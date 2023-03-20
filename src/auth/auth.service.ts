@@ -3,18 +3,26 @@ import { LoggedUser } from 'src/users/interfaces/user.intetrface';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt'
 import { User } from 'src/users/schemas/user.schema';
+import { EncryptService } from 'src/tools/encrypt.service';
 
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService,
-        private jwtService: JwtService) { }
+    constructor(
+        private usersService: UsersService,
+        private jwtService: JwtService,
+        private encryptService: EncryptService
+    ) { }
 
-    async validateUser(username: string, password: string): Promise<LoggedUser> {
+    async validateUser(username: string, userPassword: string): Promise<LoggedUser> {
         try {
             const user = await this.usersService.findUser(username)
-            if (user && user.password === password) {
-                const { password, ...userLogged } = user
-                return userLogged
+            if (user) {
+                const isPassword = await this.encryptService.compare(userPassword, user.password)
+
+                if (isPassword) {
+                    const { password, ...userLogged } = user
+                    return userLogged
+                }
 
             } return null
 
