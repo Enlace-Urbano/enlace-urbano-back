@@ -2,9 +2,8 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 
-// @ApiBearerAuth()
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
@@ -20,18 +19,18 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findUser(@Param('id') id: string) {
-    return this.usersService.findUser(id);
+  @Get(':username')
+  findUser(@Param('username') username: string) {
+    return this.usersService.findUser(username);
   }
 
-  @Patch(':id')
+  @Patch(':username')
   update(
-    @Body() newuser: UpdateUserDto,
-    @Param('id') id: string,
-  ) {
-    return this.usersService.update(id, newuser);
+    @Param('username') username: string,
+    @Body() UpdateUserDto: UpdateUserDto) {
+    return this.usersService.update(username, UpdateUserDto)
   }
+
 
   @Delete(':id')
   remove(@Param('id') id: string) {

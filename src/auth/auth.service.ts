@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { LoggedUser } from 'src/users/interfaces/user.intetrface';
+import { UsersService } from 'src/users/users.service';
+import { JwtService } from '@nestjs/jwt'
+import { User } from 'src/users/schemas/user.schema';
+import { EncryptService } from 'src/tools/encrypt.service';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
-  }
+    constructor(
+        private usersService: UsersService,
+        private jwtService: JwtService,
+        private encryptService: EncryptService
+    ) { }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+    async validateUser(username: string, userPassword: string): Promise<LoggedUser> {
+        try {
+            const user = await this.usersService.findUser(username)
+            if (user) {
+                const isPassword = await this.encryptService.compare(userPassword, user.password)
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+                if (isPassword) {
+                    const { password, ...userLogged } = user
+                    return userLogged
+                }
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
+            } return null
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
-  }
+        } catch (error) {
+            throw new UnauthorizedException()
+        }
+    }
+
+    async login(user: User) {
+        try {
+            const validatedUser = await this.validateUser(user.username, user.password)
+            const payload = { username: validatedUser.username, id: validatedUser._id }
+            const token = this.jwtService.sign(payload)
+            return {
+                access_token: token
+            }
+
+        } catch (error) {
+            throw new UnauthorizedException()
+        }
+    }
 }
