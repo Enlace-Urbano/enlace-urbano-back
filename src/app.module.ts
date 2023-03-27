@@ -7,6 +7,7 @@ import { WorkersModule } from './workers/workers.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ToolsModule } from './tools/tools.module';
+import { ProjectsModule } from './projects/projects.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -18,6 +19,7 @@ dotenv.config();
     WorkersModule,
     AuthModule,
     ToolsModule,
+    ProjectsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
