@@ -7,6 +7,7 @@ import { Worker, WorkerDocument } from './schemas/worker.schema'
 import { Model } from 'mongoose';
 
 
+
 @Injectable()
 export class WorkersService {
   constructor(
@@ -18,11 +19,11 @@ export class WorkersService {
     return this.workerModel.create(createWorkerDto);
   }
 
-  findAll(): Promise<Worker[]> {
+  async findAll(): Promise<Worker[]> {
     return this.workerModel.find().exec();
   }
 
-  findOne(name: string) {
+  findOne(name: string) { 
     return this.workerModel.findOne({ name });
   }
 

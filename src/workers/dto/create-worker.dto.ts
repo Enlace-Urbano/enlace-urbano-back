@@ -3,12 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateWorkerDto {
   @ApiProperty({
-    example: 'Chander',
+  example: 'Rigoberto'
   })
   name: string;
-
   @ApiProperty({
-    example: 'Repartidor KFC',
+    example: 'Cajero'
   })
   role: string;
+  @ApiProperty({ type: 'image', format: 'png' })
+  image: Buffer;
 }
