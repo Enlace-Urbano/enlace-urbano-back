@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { hash } from 'bcrypt';
 import { Model } from 'mongoose';
 import { EncryptService } from 'src/tools/encrypt.service';
 import { CreateUserDto } from './dto/create-user.dto';
