@@ -21,7 +21,7 @@ import { Response } from 'express';
 @Controller('statistics')
 export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
-  
+
   @Post()
   create(@Body() createStatisticDto: CreateStatisticDto) {
     return this.statisticsService.create(createStatisticDto);
@@ -32,17 +32,17 @@ export class StatisticsController {
   }
 
   @Get(':register')
-  findUser(@Param('register') register: string) {
-    return this.statisticsService.findUser(register);
+  findStatistic(@Param('register') register: string) {
+    return this.statisticsService.findOne(register);
   }
 
   @Patch(':register')
   update(
     @Param('register') register: string,
-    @Body() UpdateUserDto: UpdateUserDto) {
-    return this.statisticsService.update(register, UpdateUserDto)
+    @Body() UpdateStatisticDto: UpdateStatisticDto,
+  ) {
+    return this.statisticsService.update(register, UpdateStatisticDto);
   }
-
 
   @Delete(':register')
   remove(@Param('register') register: string) {
