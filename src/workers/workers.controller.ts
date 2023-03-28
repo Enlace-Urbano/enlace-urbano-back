@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
@@ -17,20 +18,22 @@ import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 
 @ApiTags('workers')
 @Controller('workers')
 export class WorkersController {
-  constructor(private readonly workersService: WorkersService) {}
-  
+  constructor(private readonly workersService: WorkersService) { }
+
+  @UseGuards(LocalAuthGuard)
   @Post()
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024} }))
+  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024 } }))
   async create(@Body() createWorkerDto: CreateWorkerDto, @UploadedFile() image: Express.Multer.File) {
     createWorkerDto.image = image.buffer;
     return this.workersService.create(createWorkerDto);
   }
-  
+
   @Get()
   async findAll() {
     const workers = await this.workersService.findAll();
@@ -39,7 +42,7 @@ export class WorkersController {
       return { name, role };
     });
   }
-  
+
   @Get(':name')
   async findOne(@Param('name') name: string) {
     const worker = await this.workersService.findOne(name);
@@ -47,6 +50,7 @@ export class WorkersController {
     return { name, role };
   }
 
+  @UseGuards(LocalAuthGuard)
   @Patch(':name')
   async update(
     @Param('name') name: string,
@@ -55,6 +59,7 @@ export class WorkersController {
     return this.workersService.update(name, updateWorkerDto);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Delete(':name')
   async remove(@Param('name') name: string) {
     return this.workersService.remove(name);

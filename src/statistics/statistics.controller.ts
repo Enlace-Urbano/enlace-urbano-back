@@ -9,6 +9,7 @@ import {
   UseInterceptors,
   UploadedFile,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { StatisticsService } from './statistics.service';
 import { CreateStatisticDto } from './dto/create-statistic.dto';
@@ -16,16 +17,19 @@ import { UpdateStatisticDto } from './dto/update-statistic.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { LocalAuthGuard } from 'src/auth/local-auth.guard';
 
 @ApiTags('statistics')
 @Controller('statistics')
 export class StatisticsController {
-  constructor(private readonly statisticsService: StatisticsService) {}
+  constructor(private readonly statisticsService: StatisticsService) { }
 
+  @UseGuards(LocalAuthGuard)
   @Post()
   create(@Body() createStatisticDto: CreateStatisticDto) {
     return this.statisticsService.create(createStatisticDto);
   }
+
   @Get()
   findAll() {
     return this.statisticsService.findAll();
@@ -36,6 +40,7 @@ export class StatisticsController {
     return this.statisticsService.findOne(register);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Patch(':register')
   update(
     @Param('register') register: string,
@@ -44,6 +49,7 @@ export class StatisticsController {
     return this.statisticsService.update(register, UpdateStatisticDto);
   }
 
+  @UseGuards(LocalAuthGuard)
   @Delete(':register')
   remove(@Param('register') register: string) {
     return this.statisticsService.remove(register);
