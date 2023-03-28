@@ -8,6 +8,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ToolsModule } from './tools/tools.module';
 import { ProjectsModule } from './projects/projects.module';
+import { StatisticsModule } from './statistics/statistics.module';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
@@ -20,6 +21,7 @@ dotenv.config();
     AuthModule,
     ToolsModule,
     ProjectsModule,
+    StatisticsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

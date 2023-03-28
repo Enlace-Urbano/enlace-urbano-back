@@ -15,7 +15,7 @@ export class ProjectsService {
   create(createProjectDto: CreateProjectDto) {
     return this.projectModel.create(createProjectDto);
   }
-
+  
   async findAll(): Promise<Project[]> {
     return this.projectModel.find().exec();
   }
