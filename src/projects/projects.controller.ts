@@ -43,12 +43,6 @@ export class ProjectsController {
     });
   }
 
-  @Get(':title')
-  async findOne(@Param('title') title: string) {
-    const project = await this.projectsService.findOne(title);
-    const { description } = project;
-    return { title, description };
-  }
 
   @UseGuards(LocalAuthGuard)
   @Patch(':title')
