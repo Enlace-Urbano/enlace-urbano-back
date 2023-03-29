@@ -19,6 +19,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { LocalAuthGuard } from 'src/auth/local-auth.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('projects')
 @Controller('projects')
@@ -44,7 +45,7 @@ export class ProjectsController {
   }
 
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Patch(':title')
   async update(
     @Param('title') title: string,
@@ -53,7 +54,7 @@ export class ProjectsController {
     return this.projectsService.update(title, updateProjectDto);
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Delete(':title')
   async remove(@Param('title') title: string) {
     return this.projectsService.remove(title);
