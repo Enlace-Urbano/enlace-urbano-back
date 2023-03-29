@@ -38,8 +38,8 @@ export class WorkersController {
   async findAll() {
     const workers = await this.workersService.findAll();
     return workers.map(worker => {
-      const { name, role } = worker;
-      return { name, role };
+      const { name, role, profession } = worker;
+      return { name, role, profession };
     });
   }
 

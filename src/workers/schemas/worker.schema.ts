@@ -10,6 +10,10 @@ export class Worker {
   @Prop()
   role: string;
 
+  @Prop()
+  profession: string;
+
+
   @Prop({
     type: Buffer,
     required: true,

@@ -9,12 +9,21 @@ export class CreateWorkerDto {
   @IsNotEmpty()
   @Matches(/^[a-zA-Z]+$/)
   name: string;
+  
   @ApiProperty({
     example: 'Cajero'
   })
   @IsNotEmpty()
   @Matches(/^[a-zA-Z]+$/)
   role: string;
+
+  @ApiProperty({
+    example: 'Cajero'
+  })
+  @IsNotEmpty()
+  @Matches(/^[a-zA-Z]+$/)
+  profession: string;
+  
   @ApiProperty({ type: 'image', format: 'png' })
   image: Buffer;
 }
