@@ -4,7 +4,6 @@ import { AppModule } from './app.module';
 import { jwtConstants } from './auth/constants';
 
 async function bootstrap() {
-  console.log('Secret:', jwtConstants.secret);
   const app = await NestFactory.create(AppModule);
   app.enableCors();
   app.setGlobalPrefix('api/v1');
