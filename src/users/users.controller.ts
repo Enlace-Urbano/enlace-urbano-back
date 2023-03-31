@@ -6,20 +6,18 @@ import {
   Patch,
   Param,
   Delete,
-  Req,
   UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
-
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @UseGuards(JwtAuthGuard)
   @Post('/register')
