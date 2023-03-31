@@ -26,7 +26,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) { }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @Post()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024 } }))
