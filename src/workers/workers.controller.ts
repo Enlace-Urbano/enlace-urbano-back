@@ -18,7 +18,6 @@ import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('workers')

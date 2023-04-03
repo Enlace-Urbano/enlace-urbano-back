@@ -37,7 +37,7 @@ export class StatisticsController {
     return this.statisticsService.findOne(register);
   }
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Patch(':register')
   update(
     @Param('register') register: string,
