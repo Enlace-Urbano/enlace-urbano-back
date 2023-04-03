@@ -21,7 +21,7 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class StatisticsController {
   constructor(private readonly statisticsService: StatisticsService) {}
 
-  @UseGuards(JwtAuthGuard)
+  //@UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() createStatisticDto: CreateStatisticDto) {
     return this.statisticsService.create(createStatisticDto);

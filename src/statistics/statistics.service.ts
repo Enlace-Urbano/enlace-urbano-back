@@ -24,24 +24,18 @@ export class StatisticsService {
     return this.statisticModel.findOne({ register });
   }
 
-  async update(register: string, newStatistic: UpdateStatisticDto) {
+  async update(register: string, newValue: UpdateStatisticDto) {
     try {
       const statistic = await this.statisticModel.findOne({ register });
-      console.log(statistic);
       if (statistic != null) {
-        const updateStatistic = Object.assign(statistic, newStatistic);
-        return this.statisticModel.findOneAndUpdate(
-          { register },
-          updateStatistic,
-          {
-            new: true,
-          },
-        );
+        statistic.value = newValue.value;
+        return statistic.save();
       } else {
-        throw new Error();
+        throw new Error(`Statistic with register ${register} not found`);
       }
     } catch (error) {
       console.log(error);
+      throw new Error(`Failed to update statistic with register ${register}`);
     }
   }
 
