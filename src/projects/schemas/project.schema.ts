@@ -17,7 +17,7 @@ export class Project {
       validator: function (value) {
         return value.length <= 2097152;
       },
-      message: 'La imagen debe ser menor a 2 MB',
+      message: 'La imagen debe ser menor a 2 PMB',
     },
   })
   image: Buffer;
