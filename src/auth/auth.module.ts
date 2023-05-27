@@ -5,7 +5,7 @@ import { ToolsModule } from 'src/tools/tools.module';
 import { UsersModule } from 'src/users/users.module';
 import { AuthService } from './auth.service';
 import { jwtConstants } from './constants';
-//import { LoginController } from './login.controller';
+import { LoginController } from './login.controller';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 
@@ -19,7 +19,7 @@ import { LocalStrategy } from './strategies/local.strategy';
       signOptions: { expiresIn: '1h' },
     }),
   ],
-  //controllers: [LoginController],
+  controllers: [LoginController],
   providers: [JwtStrategy, AuthService, LocalStrategy],
   exports: [AuthService],
 })

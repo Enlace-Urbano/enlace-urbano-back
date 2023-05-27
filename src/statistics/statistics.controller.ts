@@ -12,7 +12,12 @@ import { StatisticsService } from './statistics.service';
 import { CreateStatisticDto } from './dto/create-statistic.dto';
 import { UpdateStatisticDto } from './dto/update-statistic.dto';
 import {} from '@nestjs/platform-express';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -23,6 +28,17 @@ export class StatisticsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Cargar datos de Estadisticas' })
+  @ApiResponse({ status: 201, description: 'Datos cargados correctamente' })
+  @ApiResponse({
+    status: 401,
+    description: 'No estas autorizado para realizar esta operación',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Pagina no encontrada',
+  })
   create(@Body() createStatisticDto: CreateStatisticDto) {
     return this.statisticsService.create(createStatisticDto);
   }

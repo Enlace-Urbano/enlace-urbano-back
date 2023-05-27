@@ -23,13 +23,18 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 @ApiTags('projects')
 @Controller('projects')
 export class ProjectsController {
-  constructor(private readonly projectsService: ProjectsService) { }
+  constructor(private readonly projectsService: ProjectsService) {}
 
   @UseGuards(JwtAuthGuard)
   @Post()
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024 } }))
-  async create(@Body() createProjectDto: CreateProjectDto, @UploadedFile() image: Express.Multer.File) {
+  @UseInterceptors(
+    FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024 } }),
+  )
+  async create(
+    @Body() createProjectDto: CreateProjectDto,
+    @UploadedFile() image: Express.Multer.File,
+  ) {
     createProjectDto.image = image.buffer;
     return this.projectsService.create(createProjectDto);
   }
@@ -37,12 +42,11 @@ export class ProjectsController {
   @Get()
   async findAll() {
     const projects = await this.projectsService.findAll();
-    return projects.map(project => {
+    return projects.map((project) => {
       const { title, description } = project;
       return { title, description };
     });
   }
-
 
   @UseGuards(JwtAuthGuard)
   @Patch(':title')
