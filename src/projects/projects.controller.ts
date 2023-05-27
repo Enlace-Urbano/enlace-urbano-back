@@ -16,7 +16,7 @@ import { ProjectsService } from './projects.service';
 import { CreateProjectDto } from './dto/create-project.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -27,6 +27,7 @@ export class ProjectsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024 } }),
@@ -50,6 +51,7 @@ export class ProjectsController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':title')
+  @ApiBearerAuth()
   async update(
     @Param('title') title: string,
     @Body() updateProjectDto: UpdateProjectDto,
@@ -59,6 +61,7 @@ export class ProjectsController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':title')
+  @ApiBearerAuth()
   async remove(@Param('title') title: string) {
     return this.projectsService.remove(title);
   }

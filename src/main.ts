@@ -8,7 +8,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
 
   const options = new DocumentBuilder()
-    .addBearerAuth()
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .setTitle('Enlace Urbano')
     .setDescription('Api rest para la ONG Enlace Urbano')
     .setVersion('1.0')

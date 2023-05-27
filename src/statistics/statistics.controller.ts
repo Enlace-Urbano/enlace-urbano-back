@@ -55,6 +55,7 @@ export class StatisticsController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':register')
+  @ApiBearerAuth()
   update(
     @Param('register') register: string,
     @Body() UpdateStatisticDto: UpdateStatisticDto,
