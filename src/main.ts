@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { jwtConstants } from './auth/constants';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,7 +8,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api/v1');
 
   const options = new DocumentBuilder()
-    .addBearerAuth()
+    .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' })
     .setTitle('Enlace Urbano')
     .setDescription('Api rest para la ONG Enlace Urbano')
     .setVersion('1.0')

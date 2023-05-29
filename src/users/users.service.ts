@@ -13,41 +13,44 @@ export class UsersService {
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
     private encryptService: EncryptService,
-  ) { }
+  ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-
-    const existingUser = await this.userModel.findOne({ username: createUserDto.username }).exec();
+    const existingUser = await this.userModel
+      .findOne({ username: createUserDto.username })
+      .exec();
     if (existingUser) {
       throw new ConflictException('Este nombre de usuario ya existe');
     }
 
-    const hashPassword = await this.encryptService.encrypt(createUserDto.password)
-    createUserDto.password = hashPassword
-    return this.userModel.create(createUserDto)
+    const hashPassword = await this.encryptService.encrypt(
+      createUserDto.password,
+    );
+    createUserDto.password = hashPassword;
+    return this.userModel.create(createUserDto);
   }
 
   findAll(): Promise<User[]> {
-    return this.userModel.find().exec()
+    return this.userModel.find().exec();
   }
 
   async findUser(username: string): Promise<User> {
-    return this.userModel.findOne({ username }).lean()
+    return this.userModel.findOne({ username }).lean();
   }
 
   async update(username: string, newUser: UpdateUserDto) {
     try {
-      const user = await this.userModel.findOne({ username })
+      const user = await this.userModel.findOne({ username });
       if (user != null) {
         const updateuser = Object.assign(user, newUser);
-        return this.userModel.findOneAndUpdate({ username }, newUser, { new: true });
+        return this.userModel.findOneAndUpdate({ username }, newUser, {
+          new: true,
+        });
+      } else {
+        throw new Error();
       }
-      else {
-        throw new Error()
-      }
-    }
-    catch (error) {
-      console.log(error)
+    } catch (error) {
+      console.log(error);
     }
   }
 

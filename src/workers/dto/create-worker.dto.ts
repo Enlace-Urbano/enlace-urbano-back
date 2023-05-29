@@ -4,26 +4,26 @@ import { IsNotEmpty, Matches } from 'class-validator';
 
 export class CreateWorkerDto {
   @ApiProperty({
-    example: 'Rigoberto'
+    example: 'Rigoberto',
   })
   @IsNotEmpty()
   @Matches(/^[a-zA-Z]+$/)
   name: string;
-  
+
   @ApiProperty({
-    example: 'Cajero'
+    example: 'Cajero',
   })
   @IsNotEmpty()
   @Matches(/^[a-zA-Z]+$/)
   role: string;
 
   @ApiProperty({
-    example: 'Cajero'
+    example: 'Cajero',
   })
   @IsNotEmpty()
   @Matches(/^[a-zA-Z]+$/)
   profession: string;
-  
-  @ApiProperty({ type: 'image', format: 'png' })
+
+  @ApiProperty({ type: 'file', format: 'png' })
   image: Buffer;
 }

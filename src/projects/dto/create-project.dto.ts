@@ -15,7 +15,7 @@ export class CreateProjectDto {
   @IsNotEmpty()
   description: string;
 
-  @ApiProperty({ type: 'image', format: 'png' })
+  @ApiProperty({ type: 'file', format: 'png' })
   @IsNotEmpty()
   image: Buffer;
 }

@@ -9,8 +9,6 @@ export class Statistic {
 
   @Prop()
   value: number;
-
-
 }
 
 export const StatisticSchema = SchemaFactory.createForClass(Statistic);

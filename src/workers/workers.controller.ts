@@ -16,7 +16,7 @@ import { WorkersService } from './workers.service';
 import { CreateWorkerDto } from './dto/create-worker.dto';
 import { UpdateWorkerDto } from './dto/update-worker.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
@@ -27,6 +27,7 @@ export class WorkersController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
+  @ApiBearerAuth()
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FileInterceptor('image', { limits: { fileSize: 2 * 1024 * 1024 } }),
@@ -57,6 +58,7 @@ export class WorkersController {
 
   @UseGuards(JwtAuthGuard)
   @Patch(':name')
+  @ApiBearerAuth()
   async update(
     @Param('name') name: string,
     @Body() updateWorkerDto: UpdateWorkerDto,
@@ -66,6 +68,7 @@ export class WorkersController {
 
   @UseGuards(JwtAuthGuard)
   @Delete(':name')
+  @ApiBearerAuth()
   async remove(@Param('name') name: string) {
     return this.workersService.remove(name);
   }

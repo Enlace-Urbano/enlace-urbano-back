@@ -13,7 +13,6 @@ export class Worker {
   @Prop()
   profession: string;
 
-
   @Prop({
     type: Buffer,
     required: true,
